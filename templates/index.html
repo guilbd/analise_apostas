@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Especialista em Apostas Esportivas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: white;
+            padding: 5rem 0;
+            margin-bottom: 2rem;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 2rem;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+        .demo-section {
+            background-color: #e9ecef;
+            padding: 4rem 0;
+            margin: 3rem 0;
+        }
+        .demo-img {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 100%;
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #198754 0%, #157347 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-top: 3rem;
+        }
+        footer {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>
+                Sistema de Apostas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Funcionalidades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#demo">Demonstração</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary ms-2" href="/login">
+                            <i class="fas fa-sign-in-alt me-1"></i> Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Sistema Especialista em Apostas Esportivas</h1>
+            <p class="lead mb-5">Uma plataforma avançada para análise de jogos e recomendações de apostas baseadas em dados</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="/login" class="btn btn-light btn-lg px-4 gap-3">
+                    <i class="fas fa-sign-in-alt me-2"></i> Acessar Sistema
+                </a>
+                <a href="#features" class="btn btn-outline-light btn-lg px-4">
+                    <i class="fas fa-info-circle me-2"></i> Saiba Mais
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Funcionalidades Principais</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h4 class="card-title">Coleta Automática</h4>
+                            <p class="card-text">O sistema coleta automaticamente jogos de diversas fontes, mantendo você sempre atualizado com as partidas mais recentes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h4 class="card-title">Análise Estatística</h4>
+                            <p class="card-text">Análise profunda de partidas com base em histórico, confrontos diretos e estatísticas avançadas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <h4 class="card-title">Recomendações Personalizadas</h4>
+                            <p class="card-text">Recomendações de apostas em diferentes níveis de risco: baixo risco, moderado e alto retorno.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <h4 class="card-title">Mercados Adicionais</h4>
+                            <p class="card-text">Análise especializada de mercados adicionais como escanteios e cartões para maximizar suas oportunidades.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <h4 class="card-title">Estratégia de Cashout</h4>
+                            <p class="card-text">Recomendações inteligentes sobre o momento ideal para cashout e o valor sugerido a retirar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card feature-card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <h4 class="card-title">Dashboard Interativo</h4>
+                            <p class="card-text">Interface moderna e responsiva com atualizações em tempo real e visualizações de dados avançadas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Demonstração do Sistema</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://via.placeholder.com/600x400?text=Dashboard+Preview" alt="Dashboard Preview" class="demo-img">
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mb-4">Dashboard Intuitivo e Poderoso</h3>
+                    <p class="lead">Nosso dashboard foi projetado para fornecer todas as informações que você precisa em um único lugar.</p>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check-circle text-success me-2"></i> Visualização clara de jogos disponíveis</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check-circle text-success me-2"></i> Filtros avançados para encontrar as melhores oportunidades</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check-circle text-success me-2"></i> Gráficos interativos para análise de tendências</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check-circle text-success me-2"></i> Relatórios detalhados com recomendações personalizadas</li>
+                    </ul>
+                    <a href="/login" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt me-2"></i> Experimente Agora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">O Que Nossos Usuários Dizem</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center mb-3">
+                                <span class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </div>
+                            <p class="card-text text-center">"Este sistema revolucionou minha abordagem para apostas esportivas. As recomendações são precisas e o dashboard é extremamente intuitivo."</p>
+                            <div class="text-center mt-3">
+                                <h5 class="card-title mb-0">Carlos Silva</h5>
+                                <small class="text-muted">Apostador Profissional</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center mb-3">
+                                <span class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </div>
+                            <p class="card-text text-center">"A análise de mercados adicionais como escanteios e cartões me deu uma vantagem competitiva que não encontrei em nenhum outro sistema."</p>
+                            <div class="text-center mt-3">
+                                <h5 class="card-title mb-0">Ana Oliveira</h5>
+                                <small class="text-muted">Analista Esportiva</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-center mb-3">
+                                <span class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </span>
+                            </div>
+                            <p class="card-text text-center">"As estratégias de cashout são simplesmente brilhantes. Já salvaram minhas apostas diversas vezes e maximizaram meus ganhos."</p>
+                            <div class="text-center mt-3">
+                                <h5 class="card-title mb-0">Pedro Santos</h5>
+                                <small class="text-muted">Apostador Casual</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="display-5 fw-bold mb-4">Pronto para Transformar Suas Apostas?</h2>
+            <p class="lead mb-5">Junte-se a milhares de apostadores que estão tomando decisões mais inteligentes com nosso sistema especialista.</p>
+            <a href="/login" class="btn btn-light btn-lg px-5">
+                <i class="fas fa-sign-in-alt me-2"></i> Começar Agora
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Sistema de Apostas Esportivas</h5>
+                    <p>Uma plataforma avançada para análise de jogos e recomendações de apostas baseadas em dados.</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Links Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-light">Início</a></li>
+                        <li><a href="#features" class="text-decoration-none text-light">Funcionalidades</a></li>
+                        <li><a href="#demo" class="text-decoration-none text-light">Demonstração</a></li>
+                        <li><a href="/login" class="text-decoration-none text-light">Login</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="mb-3">Contato</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> contato@sistemaapostas.com</li>
+                        <li><i class="fas fa-phone me-2"></i> (11) 9999-9999</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> São Paulo, SP - Brasil</li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 Sistema Especialista em Apostas Esportivas. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

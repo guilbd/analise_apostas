@@ -1,0 +1,133 @@
+{% extends "base.html" %}{% block content %}
+<div class="dashboard-container"><div class="row mb-4"><div class="col-md-12"><div class="card shadow-lg border-0"><div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"><h3 class="mb-0"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h3><div class="d-flex">
+{% if current_user.nivel_acesso == 'admin' %}
+<a href="{{ url_for('admin_usuarios') }}" class="btn btn-light me-2"><i class="fas fa-users-cog me-2"></i>Gerenciar Usuários
+</a>
+{% endif %}
+<form method="POST" action="{{ url_for('coletar_jogos') }}" class="d-inline"><button type="submit" class="btn btn-light"><i class="fas fa-sync-alt me-2"></i>Atualizar Jogos
+</button></form></div></div></div></div></div><div class="row mb-4"><div class="col-md-3 mb-3"><div class="card bg-primary text-white h-100 shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h6 class="text-uppercase">Jogos Disponíveis</h6><h2 class="mb-0">{{ jogos|length }}</h2></div><i class="fas fa-futbol fa-3x opacity-50"></i></div></div><div class="card-footer d-flex align-items-center justify-content-between"><a href="#jogos-section" class="text-white text-decoration-none">Ver detalhes</a><i class="fas fa-angle-right text-white"></i></div></div></div><div class="col-md-3 mb-3"><div class="card bg-success text-white h-100 shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h6 class="text-uppercase">Relatórios</h6><h2 class="mb-0">{{ relatorios|length }}</h2></div><i class="fas fa-chart-line fa-3x opacity-50"></i></div></div><div class="card-footer d-flex align-items-center justify-content-between"><a href="#relatorios-section" class="text-white text-decoration-none">Ver detalhes</a><i class="fas fa-angle-right text-white"></i></div></div></div><div class="col-md-3 mb-3"><div class="card bg-warning text-white h-100 shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h6 class="text-uppercase">Apostas Recomendadas</h6><h2 class="mb-0">{{ relatorios|length * 3 }}</h2></div><i class="fas fa-thumbs-up fa-3x opacity-50"></i></div></div><div class="card-footer d-flex align-items-center justify-content-between"><a href="#relatorios-section" class="text-white text-decoration-none">Ver detalhes</a><i class="fas fa-angle-right text-white"></i></div></div></div><div class="col-md-3 mb-3"><div class="card bg-info text-white h-100 shadow"><div class="card-body"><div class="d-flex justify-content-between align-items-center"><div><h6 class="text-uppercase">Bem-vindo</h6><h5 class="mb-0">{{ current_user.nome_completo or current_user.username }}</h5></div><i class="fas fa-user fa-3x opacity-50"></i></div></div><div class="card-footer d-flex align-items-center justify-content-between"><span class="text-white">{{ current_user.nivel_acesso|title }}</span><i class="fas fa-shield-alt text-white"></i></div></div></div></div><div class="row"><div class="col-md-4 mb-4" id="jogos-section"><div class="card bg-light h-100 shadow"><div class="card-header bg-primary text-white"><h5 class="card-title mb-0"><i class="fas fa-futbol me-2"></i>Jogos Disponíveis</h5></div><div class="card-body"><div class="input-group mb-3"><span class="input-group-text"><i class="fas fa-search"></i></span><input type="text" class="form-control" id="filtro-jogos" placeholder="Filtrar jogos..."></div><div class="list-group jogos-list" id="lista-jogos">
+{% if jogos %}
+{% for jogo in jogos %}
+<a href="#" class="list-group-item list-group-item-action selecionar-jogo"
+data-casa="{{ jogo.time_casa }}" data-visitante="{{ jogo.time_visitante }}"><div class="d-flex w-100 justify-content-between"><h6 class="mb-1">{{ jogo.time_casa }} vs {{ jogo.time_visitante }}</h6><small class="text-primary">{{ jogo.data }}</small></div><div class="d-flex justify-content-between"><small class="text-muted">{{ jogo.hora }}</small><small class="text-muted">{{ jogo.campeonato }}</small></div></a>
+{% endfor %}
+{% else %}
+<div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>Nenhum jogo disponível. Clique em "Atualizar Jogos" para coletar jogos.
+</div>
+{% endif %}
+</div></div></div></div><div class="col-md-8 mb-4"><div class="card bg-light h-100 shadow"><div class="card-header bg-primary text-white"><h5 class="card-title mb-0"><i class="fas fa-chart-line me-2"></i>Analisar Jogo</h5></div><div class="card-body"><form method="POST" action="{{ url_for('analisar_jogo') }}" id="form-analise"><div class="row mb-3"><div class="col-md-5"><label for="time_casa" class="form-label">Time da Casa</label><div class="input-group"><span class="input-group-text"><i class="fas fa-home"></i></span><input type="text" class="form-control" id="time_casa" name="time_casa" required></div></div><div class="col-md-2 d-flex align-items-end justify-content-center"><span class="h4 mb-0">vs</span></div><div class="col-md-5"><label for="time_visitante" class="form-label">Time Visitante</label><div class="input-group"><span class="input-group-text"><i class="fas fa-plane"></i></span><input type="text" class="form-control" id="time_visitante" name="time_visitante" required></div></div></div><div class="d-grid gap-2"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-search me-2"></i>Analisar Jogo
+</button></div></form><div class="mt-4"><h5 class="card-title"><i class="fas fa-info-circle me-2"></i>Informações</h5><div class="alert alert-primary"><p class="mb-0"><i class="fas fa-lightbulb me-2"></i>
+Selecione um jogo da lista ou insira manualmente os times para análise.
+</p><p class="mb-0 mt-2"><i class="fas fa-clock me-2"></i>
+A análise pode levar alguns segundos para ser concluída.
+</p></div></div><div class="mt-4"><h5 class="card-title"><i class="fas fa-chart-pie me-2"></i>Distribuição de Apostas</h5><div class="row"><div class="col-md-6"><canvas id="apostas-chart" width="400" height="300"></canvas></div><div class="col-md-6"><div class="card bg-light"><div class="card-body"><h6 class="card-title">Tipos de Apostas Recomendadas</h6><ul class="list-group"><li class="list-group-item d-flex justify-content-between align-items-center">
+Baixo Risco
+<span class="badge bg-success rounded-pill">{{ relatorios|length }}</span></li><li class="list-group-item d-flex justify-content-between align-items-center">
+Risco Moderado
+<span class="badge bg-warning rounded-pill">{{ relatorios|length }}</span></li><li class="list-group-item d-flex justify-content-between align-items-center">
+Alto Retorno
+<span class="badge bg-danger rounded-pill">{{ relatorios|length }}</span></li></ul></div></div></div></div></div></div></div></div></div><div class="row" id="relatorios-section"><div class="col-md-12"><div class="card bg-light shadow"><div class="card-header bg-primary text-white"><h5 class="card-title mb-0"><i class="fas fa-history me-2"></i>Relatórios Recentes</h5></div><div class="card-body"><div class="table-responsive"><table class="table table-hover" id="tabela-relatorios"><thead class="table-primary"><tr><th>Jogo</th><th>Data</th><th>Ações</th></tr></thead><tbody>
+{% if relatorios %}
+{% for relatorio in relatorios %}
+<tr><td>{{ relatorio.jogo }}</td><td>{{ relatorio.data }}</td><td><a href="{{ url_for('visualizar_relatorio', filename=relatorio.filename) }}" class="btn btn-sm btn-primary"><i class="fas fa-eye me-1"></i>Visualizar
+</a></td></tr>
+{% endfor %}
+{% else %}
+<tr><td colspan="3" class="text-center">Nenhum relatório disponível.</td></tr>
+{% endif %}
+</tbody></table></div></div></div></div></div></div>
+{% endblock %}{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Filtro de jogos
+const filtroJogos = document.getElementById('filtro-jogos');
+if (filtroJogos) {
+filtroJogos.addEventListener('keyup', function() {
+const termo = this.value.toLowerCase();
+const jogos = document.querySelectorAll('#lista-jogos .list-group-item');
+jogos.forEach(jogo => {
+const texto = jogo.textContent.toLowerCase();
+if (texto.includes(termo)) {
+jogo.style.display = '';
+} else {
+jogo.style.display = 'none';
+}
+});
+});
+}
+// Selecionar jogo da lista
+const jogosLinks = document.querySelectorAll('.selecionar-jogo');
+jogosLinks.forEach(link => {
+link.addEventListener('click', function(e) {
+e.preventDefault();
+const timeCasa = this.getAttribute('data-casa');
+const timeVisitante = this.getAttribute('data-visitante');
+document.getElementById('time_casa').value = timeCasa;
+document.getElementById('time_visitante').value = timeVisitante;
+// Destacar o jogo selecionado
+jogosLinks.forEach(l => l.classList.remove('active'));
+this.classList.add('active');
+// Scroll para o formulário de análise em dispositivos móveis
+if (window.innerWidth < 768) {
+document.getElementById('form-analise').scrollIntoView({
+behavior: 'smooth'
+});
+}
+});
+});
+// Adicionar loading spinner ao formulário de análise
+const formAnalise = document.getElementById('form-analise');
+if (formAnalise) {
+formAnalise.addEventListener('submit', function() {
+const submitButton = this.querySelector('button[type="submit"]');
+submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Analisando...';
+submitButton.disabled = true;
+// Adicionar overlay de loading
+const loadingOverlay = document.createElement('div');
+loadingOverlay.className = 'loading-overlay';
+loadingOverlay.innerHTML = `
+<div class="spinner-container"><div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"><span class="visually-hidden">Carregando...</span></div><p class="mt-3 text-white">Analisando jogo, por favor aguarde...</p></div>
+`;
+document.body.appendChild(loadingOverlay);
+});
+}
+// Inicializar gráfico de distribuição de apostas
+const ctx = document.getElementById('apostas-chart');
+if (ctx) {
+new Chart(ctx, {
+type: 'pie',
+data: {
+labels: ['Baixo Risco', 'Risco Moderado', 'Alto Retorno'],
+datasets: [{
+data: [{{ relatorios|length }}, {{ relatorios|length }}, {{ relatorios|length }}],
+backgroundColor: ['#198754', '#ffc107', '#dc3545']
+}]
+},
+options: {
+responsive: true,
+plugins: {
+legend: {
+position: 'bottom'
+},
+title: {
+display: true,
+text: 'Distribuição por Tipo de Aposta'
+}
+}
+}
+});
+}
+// Inicializar DataTable para relatórios
+if (typeof $.fn.DataTable !== 'undefined') {
+$('#tabela-relatorios').DataTable({
+language: {
+url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json'
+},
+pageLength: 5,
+lengthMenu: [5, 10, 25, 50],
+responsive: true
+});
+}
+});
+</script>
+{% endblock %}

@@ -1,0 +1,113 @@
+{
+  "jogo": "Internacional vs Coritiba",
+  "timestamp": 1745032269.964234,
+  "estatisticas": {
+    "historico": {
+      "internacional": {
+        "ultimos_5_jogos": "VVEVD",
+        "aproveitamento": "60%"
+      },
+      "coritiba": {
+        "ultimos_5_jogos": "DDDVE",
+        "aproveitamento": "33%"
+      }
+    },
+    "confrontos_diretos": [
+      {
+        "data": "10/01/2025",
+        "resultado": "Internacional 2 x 0 Coritiba"
+      },
+      {
+        "data": "15/08/2024",
+        "resultado": "Coritiba 1 x 3 Internacional"
+      },
+      {
+        "data": "20/03/2024",
+        "resultado": "Internacional 1 x 1 Coritiba"
+      }
+    ]
+  },
+  "recomendacoes": [
+    {
+      "tipo": "baixo_risco",
+      "aposta": "Under 3.5 gols",
+      "odd": 1.29,
+      "justificativa": "Historicamente, os confrontos entre estas equipes t\u00eam m\u00e9dia de 2.7 gols por partida."
+    },
+    {
+      "tipo": "moderada",
+      "aposta": "Vit\u00f3ria Internacional",
+      "odd": 1.85,
+      "justificativa": "O Internacional tem melhor aproveitamento recente e venceu os \u00faltimos dois confrontos diretos."
+    },
+    {
+      "tipo": "alto_retorno",
+      "aposta": "Resultado Exato 2-0",
+      "odd": 9.5,
+      "justificativa": "Este foi o resultado do \u00faltimo confronto no est\u00e1dio do Internacional."
+    }
+  ],
+  "escanteios": {
+    "estatisticas": {
+      "media_internacional": 5.8,
+      "media_coritiba": 4.2,
+      "media_confrontos": 10.3
+    },
+    "recomendacoes": [
+      {
+        "aposta": "Over 8.5 escanteios",
+        "odd": 1.12,
+        "justificativa": "A m\u00e9dia de escanteios nos confrontos diretos \u00e9 de 10.3."
+      },
+      {
+        "aposta": "Over 9.5 escanteios",
+        "odd": 1.5,
+        "justificativa": "80% dos \u00faltimos confrontos tiveram mais de 9 escanteios."
+      },
+      {
+        "aposta": "Internacional mais escanteios",
+        "odd": 1.8,
+        "justificativa": "O Internacional tem m\u00e9dia superior de escanteios a favor."
+      },
+      {
+        "aposta": "Total de escanteios entre 9-14",
+        "odd": 3.25,
+        "justificativa": "Faixa mais prov\u00e1vel baseada nas estat\u00edsticas recentes."
+      }
+    ]
+  },
+  "cartoes": {
+    "estatisticas": {
+      "media_internacional": 2.1,
+      "media_coritiba": 2.8,
+      "media_confrontos": 4.5
+    },
+    "recomendacoes": [
+      {
+        "aposta": "Over 3.5 cart\u00f5es",
+        "odd": 1.12,
+        "justificativa": "A m\u00e9dia de cart\u00f5es nos confrontos diretos \u00e9 de 4.5."
+      },
+      {
+        "aposta": "Over 4.5 cart\u00f5es",
+        "odd": 1.5,
+        "justificativa": "70% dos \u00faltimos confrontos tiveram mais de 4 cart\u00f5es."
+      },
+      {
+        "aposta": "Coritiba mais cart\u00f5es",
+        "odd": 1.8,
+        "justificativa": "O Coritiba tem m\u00e9dia superior de cart\u00f5es recebidos."
+      },
+      {
+        "aposta": "Total de cart\u00f5es entre 4-7",
+        "odd": 3.25,
+        "justificativa": "Faixa mais prov\u00e1vel baseada nas estat\u00edsticas recentes."
+      }
+    ]
+  },
+  "cashout": {
+    "momento": "Ap\u00f3s 70 minutos, se o internacional estiver vencendo por 1 gol de diferen\u00e7a",
+    "valor_sugerido": "75% do valor potencial",
+    "justificativa": "O Internacional sofreu gols nos \u00faltimos 20 minutos em 40% de seus jogos recentes."
+  }
+}

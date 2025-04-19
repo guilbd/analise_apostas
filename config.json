@@ -1,0 +1,17 @@
+{
+  "SECRET_KEY": "sistema-apostas-esportivas-production-key",
+  "DEBUG": false,
+  "TESTING": false,
+  "SEND_FILE_MAX_AGE_DEFAULT": 31536000,
+  "COMPRESS_MIMETYPES": [
+    "text/html",
+    "text/css",
+    "text/javascript",
+    "application/javascript",
+    "application/json"
+  ],
+  "COMPRESS_LEVEL": 6,
+  "COMPRESS_MIN_SIZE": 500,
+  "SERVER_NAME": "apostas-esportivas.exemplo.com",
+  "PREFERRED_URL_SCHEME": "https"
+}

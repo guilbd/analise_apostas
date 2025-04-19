@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% block content %}
+<div class="row mb-4"><div class="col-md-12"><div class="card shadow-lg border-0"><div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"><h3 class="mb-0"><i class="fas fa-users me-2"></i>Gerenciamento de Usuários</h3><div><a href="{{ url_for('admin_criar_usuario') }}" class="btn btn-light"><i class="fas fa-user-plus me-2"></i>Novo Usuário
+</a><a href="{{ url_for('dashboard') }}" class="btn btn-light ms-2"><i class="fas fa-arrow-left me-2"></i>Voltar
+</a></div></div><div class="card-body p-4"><div class="table-responsive"><table class="table table-hover"><thead class="table-primary"><tr><th>ID</th><th>Usuário</th><th>Nome Completo</th><th>Email</th><th>Nível de Acesso</th><th>Data de Criação</th><th>Último Acesso</th><th>Ações</th></tr></thead><tbody>
+{% for usuario in usuarios %}
+<tr><td>{{ usuario.id }}</td><td>{{ usuario.username }}</td><td>{{ usuario.nome_completo or '-' }}</td><td>{{ usuario.email or '-' }}</td><td>
+{% if usuario.nivel_acesso == 'admin' %}
+<span class="badge bg-danger">Administrador</span>
+{% else %}
+<span class="badge bg-secondary">Usuário</span>
+{% endif %}
+</td><td>
+{% if usuario.data_criacao %}
+{{ usuario.data_criacao|timestamp_to_date }}
+{% else %}
+-
+{% endif %}
+</td><td>
+{% if usuario.ultimo_acesso %}
+{{ usuario.ultimo_acesso|timestamp_to_date }}
+{% else %}
+-
+{% endif %}
+</td><td><div class="btn-group" role="group"><a href="{{ url_for('admin_editar_usuario', user_id=usuario.id) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+{% if usuario.id != current_user.id %}
+<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ usuario.id }}"><i class="fas fa-trash"></i></button>
+{% else %}
+<button type="button" class="btn btn-sm btn-danger" disabled title="Não é possível excluir seu próprio usuário"><i class="fas fa-trash"></i></button>
+{% endif %}
+</div><div class="modal fade" id="deleteModal{{ usuario.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ usuario.id }}" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-danger text-white"><h5 class="modal-title" id="deleteModalLabel{{ usuario.id }}">Confirmar Exclusão</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><p>Tem certeza que deseja excluir o usuário <strong>{{ usuario.username }}</strong>?</p><p class="text-danger">Esta ação não pode ser desfeita!</p></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button><form action="{{ url_for('admin_excluir_usuario', user_id=usuario.id) }}" method="POST"><button type="submit" class="btn btn-danger">Excluir</button></form></div></div></div></div></td></tr>
+{% endfor %}
+</tbody></table></div></div></div></div></div>
+{% endblock %}

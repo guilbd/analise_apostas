@@ -1,0 +1,9 @@
+build_dir: ./
+start_cmd: gunicorn render_wsgi:application
+env:
+  - key: SECRET_KEY
+    value: sistema-apostas-esportivas-render-key
+  - key: FLASK_ENV
+    value: production
+  - key: PYTHONUNBUFFERED
+    value: "1"

@@ -1,0 +1,36 @@
+[2025-04-18 23:23:34] [INFO] Iniciando processo de implantação...
+[2025-04-18 23:23:34] [INFO] Preparando configurações para produção...
+[2025-04-18 23:23:34] [INFO] Configurações de produção salvas em build/config.json
+[2025-04-18 23:23:34] [INFO] Preparando arquivo WSGI...
+[2025-04-18 23:23:34] [INFO] Arquivo WSGI salvo em build/wsgi.py
+[2025-04-18 23:23:34] [INFO] Preparando versão de produção da aplicação...
+[2025-04-18 23:23:34] [INFO] Versão de produção da aplicação salva em build/app_production.py
+[2025-04-18 23:23:34] [INFO] Copiando e otimizando arquivos estáticos...
+[2025-04-18 23:23:34] [INFO] Arquivos estáticos copiados para build/static
+[2025-04-18 23:23:34] [INFO] Arquivo CSS minificado: style.css
+[2025-04-18 23:23:34] [INFO] Arquivo CSS minificado: dashboard.css
+[2025-04-18 23:23:34] [INFO] Arquivo JavaScript minificado: main.js
+[2025-04-18 23:23:34] [INFO] Arquivo JavaScript minificado: realtime.js
+[2025-04-18 23:23:34] [INFO] Copiando e otimizando templates...
+[2025-04-18 23:23:34] [INFO] Templates copiados para build/templates
+[2025-04-18 23:23:34] [INFO] Arquivo HTML minificado: base.html
+[2025-04-18 23:23:34] [INFO] Arquivo HTML minificado: index.html
+[2025-04-18 23:23:34] [INFO] Arquivo HTML minificado: login.html
+[2025-04-18 23:23:34] [INFO] Arquivo HTML minificado: dashboard.html
+[2025-04-18 23:23:34] [INFO] Arquivo HTML minificado: relatorio.html
+[2025-04-18 23:23:34] [INFO] Arquivo HTML minificado: admin_usuarios.html
+[2025-04-18 23:23:34] [INFO] Arquivo HTML minificado: admin_criar_usuario.html
+[2025-04-18 23:23:34] [INFO] Copiando arquivos de dados e configuração...
+[2025-04-18 23:23:34] [INFO] Arquivo copiado: auth.py
+[2025-04-18 23:23:34] [INFO] Arquivo copiado: performance.py
+[2025-04-18 23:23:34] [INFO] Arquivo copiado: jogos_disponiveis.json
+[2025-04-18 23:23:34] [INFO] Diretório de relatórios copiado para build/relatorios
+[2025-04-18 23:23:34] [INFO] Criando arquivo de requisitos...
+[2025-04-18 23:23:34] [INFO] Arquivo de requisitos salvo em build/requirements.txt
+[2025-04-18 23:23:34] [INFO] Criando scripts de implantação...
+[2025-04-18 23:23:34] [INFO] Scripts de implantação criados: install.sh, start.sh
+[2025-04-18 23:23:34] [INFO] Criando arquivo README...
+[2025-04-18 23:23:34] [INFO] Arquivo README salvo em build/README.md
+[2025-04-18 23:23:34] [INFO] Criando pacote de implantação...
+[2025-04-18 23:23:34] [INFO] Pacote de implantação criado: sistema_apostas_esportivas_web_20250418232334.zip
+[2025-04-18 23:23:34] [INFO] Processo de implantação concluído com sucesso!

@@ -1,0 +1,78 @@
+{% extends "base.html" %}{% block content %}
+<div class="relatorio-container"><div class="row mb-4"><div class="col-md-12"><div class="card shadow-lg border-0"><div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"><h3 class="mb-0"><i class="fas fa-file-alt me-2"></i>Relatório: {{ relatorio.jogo }}</h3><div><a href="{{ url_for('dashboard') }}" class="btn btn-light"><i class="fas fa-arrow-left me-2"></i>Voltar
+</a></div></div><div class="card-body p-4"><div class="row mb-4"><div class="col-md-12"><div class="alert alert-primary"><h4 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Resumo</h4><p>Análise completa para a partida <strong>{{ relatorio.jogo }}</strong> com recomendações de apostas, análise de mercados adicionais e estratégia de cashout.</p></div></div></div><div class="row mb-4"><div class="col-md-12"><div class="card"><div class="card-header bg-success text-white"><h4 class="mb-0"><i class="fas fa-thumbs-up me-2"></i>Recomendações de Apostas</h4></div><div class="card-body"><div class="row">
+{% for recomendacao in relatorio.recomendacoes %}
+<div class="col-md-4 mb-3"><div class="card h-100 {% if recomendacao.tipo == 'baixo_risco' %}border-success{% elif recomendacao.tipo == 'moderada' %}border-warning{% else %}border-danger{% endif %}"><div class="card-header {% if recomendacao.tipo == 'baixo_risco' %}bg-success{% elif recomendacao.tipo == 'moderada' %}bg-warning{% else %}bg-danger{% endif %} text-white"><h5 class="mb-0">
+{% if recomendacao.tipo == 'baixo_risco' %}
+<i class="fas fa-shield-alt me-2"></i>Baixo Risco
+{% elif recomendacao.tipo == 'moderada' %}
+<i class="fas fa-balance-scale me-2"></i>Risco Moderado
+{% else %}
+<i class="fas fa-bolt me-2"></i>Alto Retorno
+{% endif %}
+</h5></div><div class="card-body"><h5 class="card-title">{{ recomendacao.aposta }}</h5><div class="odd-badge mb-3"><span class="badge bg-primary p-2">Odd: {{ recomendacao.odd }}</span></div><p class="card-text">{{ recomendacao.justificativa }}</p></div></div></div>
+{% endfor %}
+</div></div></div></div></div><div class="row mb-4"><div class="col-md-6 mb-3"><div class="card h-100"><div class="card-header bg-info text-white"><h4 class="mb-0"><i class="fas fa-flag-checkered me-2"></i>Escanteios</h4></div><div class="card-body">
+{% if relatorio.escanteios and relatorio.escanteios.recomendacoes %}
+<div class="mb-3"><h5>Estatísticas</h5>
+{% if relatorio.escanteios.estatisticas %}
+<ul class="list-group">
+{% for key, value in relatorio.escanteios.estatisticas.items() %}
+{% if key != 'recomendacoes' %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+{{ key|replace('_', ' ')|title }}
+<span class="badge bg-primary rounded-pill">{{ value }}</span></li>
+{% endif %}
+{% endfor %}
+</ul>
+{% endif %}
+</div><div><h5>Recomendações</h5><div class="list-group">
+{% for rec in relatorio.escanteios.recomendacoes %}
+<div class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h6 class="mb-1">{{ rec.aposta }}</h6><small class="text-primary">Odd: {{ rec.odd }}</small></div><p class="mb-1">{{ rec.justificativa }}</p></div>
+{% endfor %}
+</div></div>
+{% else %}
+<div class="alert alert-warning">
+Não há dados de escanteios disponíveis para esta partida.
+</div>
+{% endif %}
+</div></div></div><div class="col-md-6 mb-3"><div class="card h-100"><div class="card-header bg-warning text-white"><h4 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Cartões</h4></div><div class="card-body">
+{% if relatorio.cartoes and relatorio.cartoes.recomendacoes %}
+<div class="mb-3"><h5>Estatísticas</h5>
+{% if relatorio.cartoes.estatisticas %}
+<ul class="list-group">
+{% for key, value in relatorio.cartoes.estatisticas.items() %}
+{% if key != 'recomendacoes' %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+{{ key|replace('_', ' ')|title }}
+<span class="badge bg-warning text-dark rounded-pill">{{ value }}</span></li>
+{% endif %}
+{% endfor %}
+</ul>
+{% endif %}
+</div><div><h5>Recomendações</h5><div class="list-group">
+{% for rec in relatorio.cartoes.recomendacoes %}
+<div class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h6 class="mb-1">{{ rec.aposta }}</h6><small class="text-primary">Odd: {{ rec.odd }}</small></div><p class="mb-1">{{ rec.justificativa }}</p></div>
+{% endfor %}
+</div></div>
+{% else %}
+<div class="alert alert-warning">
+Não há dados de cartões disponíveis para esta partida.
+</div>
+{% endif %}
+</div></div></div></div><div class="row"><div class="col-md-12"><div class="card"><div class="card-header bg-primary text-white"><h4 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Estratégia de Cashout</h4></div><div class="card-body">
+{% if relatorio.cashout %}
+<div class="row"><div class="col-md-4"><div class="card bg-light mb-3"><div class="card-body"><h5 class="card-title"><i class="fas fa-clock me-2"></i>Momento Ideal</h5><p class="card-text">{{ relatorio.cashout.momento }}</p></div></div></div><div class="col-md-4"><div class="card bg-light mb-3"><div class="card-body"><h5 class="card-title"><i class="fas fa-percentage me-2"></i>Valor Sugerido</h5><p class="card-text">{{ relatorio.cashout.valor_sugerido }}</p></div></div></div><div class="col-md-4"><div class="card bg-light mb-3"><div class="card-body"><h5 class="card-title"><i class="fas fa-info-circle me-2"></i>Justificativa</h5><p class="card-text">{{ relatorio.cashout.justificativa }}</p></div></div></div></div>
+{% else %}
+<div class="alert alert-warning">
+Não há estratégia de cashout disponível para esta partida.
+</div>
+{% endif %}
+</div></div></div></div></div></div></div></div></div>
+{% endblock %}{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Adicionar funcionalidades interativas se necessário
+});
+</script>
+{% endblock %}
