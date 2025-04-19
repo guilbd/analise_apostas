@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Visualizar Palpites{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Visualizar Palpites</h1>
+    
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> Palpites gerados em {{ arquivo.replace('palpites_', '').replace('.json', '') | timestamp_to_date }}
+    </div>
+    
+    <div id="container-palpites">
+        {% if palpites %}
+            {% for palpite in palpites %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">{{ palpite.jogo }}</h5>
+                            <span class="badge badge-primary">{{ palpite.competicao }}</span>
+                        </div>
+                        <small class="text-muted">{{ palpite.horario }}</small>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="mb-3">Mercados Principais</h6>
+                                <table class="table table-sm table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Mercado</th>
+                                            <th>Palpite</th>
+                                            <th>Confiança</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if palpite.mercados.1x2 %}
+                                            <tr>
+                                                <td>1X2</td>
+                                                <td>{{ palpite.mercados.1x2.palpite }}</td>
+                                                <td>{{ palpite.mercados.1x2.confianca }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        
+                                        {% if palpite.mercados.over_under %}
+                                            <tr>
+                                                <td>Over/Under</td>
+                                                <td>{{ palpite.mercados.over_under.palpite }}</td>
+                                                <td>{{ palpite.mercados.over_under.confianca }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        
+                                        {% if palpite.mercados.ambas_marcam %}
+                                            <tr>
+                                                <td>Ambas Marcam</td>
+                                                <td>{{ palpite.mercados.ambas_marcam.palpite }}</td>
+                                                <td>{{ palpite.mercados.ambas_marcam.confianca }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="mb-3">Mercados Adicionais</h6>
+                                <table class="table table-sm table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Mercado</th>
+                                            <th>Palpite</th>
+                                            <th>Confiança</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if palpite.mercados.gols_ht %}
+                                            <tr>
+                                                <td>Gols HT</td>
+                                                <td>{{ palpite.mercados.gols_ht.palpite }}</td>
+                                                <td>{{ palpite.mercados.gols_ht.confianca }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        
+                                        {% if palpite.mercados.handicap_asiatico %}
+                                            <tr>
+                                                <td>Handicap Asiático</td>
+                                                <td>{{ palpite.mercados.handicap_asiatico.palpite }}</td>
+                                                <td>{{ palpite.mercados.handicap_asiatico.confianca }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        
+                                        {% if palpite.mercados.tempo_mais_gols %}
+                                            <tr>
+                                                <td>Tempo com Mais Gols</td>
+                                                <td>{{ palpite.mercados.tempo_mais_gols.palpite }}</td>
+                                                <td>{{ palpite.mercados.tempo_mais_gols.confianca }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        
+                                        {% if palpite.mercados.gols_por_equipe %}
+                                            {% if palpite.mercados.gols_por_equipe.casa %}
+                                                <tr>
+                                                    <td>Gols Casa</td>
+                                                    <td>{{ palpite.mercados.gols_por_equipe.casa.palpite }}</td>
+                                                    <td>{{ palpite.mercados.gols_por_equipe.casa.confianca }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            
+                                            {% if palpite.mercados.gols_por_equipe.fora %}
+                                                <tr>
+                                                    <td>Gols Fora</td>
+                                                    <td>{{ palpite.mercados.gols_por_equipe.fora.palpite }}</td>
+                                                    <td>{{ palpite.mercados.gols_por_equipe.fora.confianca }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        {% if palpite.mercados.resultado_exato %}
+                            <div class="mt-3">
+                                <h6 class="mb-2">Resultado Exato (Top 3)</h6>
+                                <div class="d-flex flex-wrap">
+                                    {% for resultado in palpite.mercados.resultado_exato %}
+                                        <div class="card mr-3 mb-2" style="width: 120px;">
+                                            <div class="card-body p-2 text-center">
+                                                <h5 class="mb-1">{{ resultado.palpite }}</h5>
+                                                <div class="progress" style="height: 5px;">
+                                                    <div class="progress-bar" role="progressbar" style="width: {{ resultado.confianca | replace('%', '') }}%"></div>
+                                                </div>
+                                                <small class="text-muted">{{ resultado.confianca }}</small>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning">
+                Nenhum palpite encontrado.
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="mt-4 mb-5">
+        <a href="{{ url_for('historico_palpites') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Voltar para Histórico
+        </a>
+        <a href="{{ url_for('palpites') }}" class="btn btn-primary ml-2">
+            <i class="fas fa-sync-alt"></i> Gerar Novos Palpites
+        </a>
+    </div>
+</div>
+{% endblock %}

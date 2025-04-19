@@ -24,6 +24,9 @@ from integracao_sistema import SistemaApostasEsportivas
 from auth_fix import configurar_autenticacao
 from entrada_manual import registrar_entrada_manual
 
+# Importar módulo de palpites
+from modulo_palpites import registrar_modulo_palpites
+
 # Adicionar o diretório do sistema de apostas ao path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -69,6 +72,9 @@ user_manager = configurar_autenticacao(app)
 
 # Registrar funcionalidade de entrada manual
 registrar_entrada_manual(app)
+
+# Registrar módulo de palpites
+registrar_modulo_palpites(app)
 
 # Garantir que o diretório de relatórios exista
 os.makedirs(app.config['RELATORIOS_DIR'], exist_ok=True)

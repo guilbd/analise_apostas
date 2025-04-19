@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}Palpites de Apostas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Palpites de Apostas</h1>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Coletar Palpites</h5>
+        </div>
+        <div class="card-body">
+            <p>Clique no botão abaixo para coletar palpites de apostas para os jogos do dia da Academia das Apostas Brasil.</p>
+            <p>O sistema analisará estatísticas detalhadas e gerará palpites para diversos mercados usando técnicas estatísticas avançadas, incluindo distribuição de Poisson.</p>
+            
+            <button id="btn-coletar-palpites" class="btn btn-primary">
+                <i class="fas fa-sync-alt"></i> Coletar Palpites
+            </button>
+            
+            <div id="loading-palpites" class="mt-3 d-none">
+                <div class="d-flex align-items-center">
+                    <div class="spinner-border text-primary mr-2" role="status">
+                        <span class="sr-only">Carregando...</span>
+                    </div>
+                    <span>Coletando e analisando dados estatísticos. Isso pode levar alguns minutos...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="resultados-palpites" class="d-none">
+        <h2 class="mb-3">Palpites Gerados</h2>
+        
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Os palpites abaixo são baseados em análise estatística e não garantem resultados. Aposte com responsabilidade.
+        </div>
+        
+        <div id="container-palpites">
+            <!-- Os palpites serão inseridos aqui via JavaScript -->
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Histórico de Palpites</h5>
+        </div>
+        <div class="card-body">
+            <p>Acesse o histórico de palpites gerados anteriormente:</p>
+            <a href="{{ url_for('historico_palpites') }}" class="btn btn-secondary">
+                <i class="fas fa-history"></i> Ver Histórico
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Template para card de jogo -->
+<template id="template-card-jogo">
+    <div class="card mb-4 card-jogo">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 jogo-titulo"></h5>
+                <span class="badge badge-primary jogo-competicao"></span>
+            </div>
+            <small class="text-muted jogo-horario"></small>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="mb-3">Mercados Principais</h6>
+                    <table class="table table-sm table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Mercado</th>
+                                <th>Palpite</th>
+                                <th>Confiança</th>
+                            </tr>
+                        </thead>
+                        <tbody class="mercados-principais">
+                            <!-- Mercados principais serão inseridos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="mb-3">Mercados Adicionais</h6>
+                    <table class="table table-sm table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Mercado</th>
+                                <th>Palpite</th>
+                                <th>Confiança</th>
+                            </tr>
+                        </thead>
+                        <tbody class="mercados-adicionais">
+                            <!-- Mercados adicionais serão inseridos aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Resultado Exato (se disponível) -->
+            <div class="resultado-exato-container mt-3 d-none">
+                <h6 class="mb-2">Resultado Exato (Top 3)</h6>
+                <div class="d-flex resultado-exato-items">
+                    <!-- Itens de resultado exato serão inseridos aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<!-- Template para item de resultado exato -->
+<template id="template-resultado-exato">
+    <div class="card mr-3 mb-2" style="width: 120px;">
+        <div class="card-body p-2 text-center">
+            <h5 class="mb-1 resultado-placar"></h5>
+            <div class="progress" style="height: 5px;">
+                <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+            </div>
+            <small class="text-muted resultado-probabilidade"></small>
+        </div>
+    </div>
+</template>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Botão para coletar palpites
+        $('#btn-coletar-palpites').click(function() {
+            // Mostrar loading
+            $('#loading-palpites').removeClass('d-none');
+            $('#resultados-palpites').addClass('d-none');
+            $('#btn-coletar-palpites').prop('disabled', true);
+            
+            // Fazer requisição para API
+            $.ajax({
+                url: "{{ url_for('api_coletar_palpites') }}",
+                type: "POST",
+                dataType: "json",
+                success: function(response) {
+                    // Esconder loading
+                    $('#loading-palpites').addClass('d-none');
+                    $('#btn-coletar-palpites').prop('disabled', false);
+                    
+                    if (response.status === 'success') {
+                        // Mostrar resultados
+                        $('#resultados-palpites').removeClass('d-none');
+                        
+                        // Limpar container de palpites
+                        $('#container-palpites').empty();
+                        
+                        // Renderizar palpites
+                        renderizarPalpites(response.palpites);
+                    } else {
+                        alert('Erro ao coletar palpites: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Esconder loading
+                    $('#loading-palpites').addClass('d-none');
+                    $('#btn-coletar-palpites').prop('disabled', false);
+                    
+                    alert('Erro ao coletar palpites. Por favor, tente novamente mais tarde.');
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+        
+        // Função para renderizar palpites
+        function renderizarPalpites(palpites) {
+            if (!palpites || palpites.length === 0) {
+                $('#container-palpites').html('<div class="alert alert-warning">Nenhum palpite encontrado.</div>');
+                return;
+            }
+            
+            // Para cada jogo
+            palpites.forEach(function(palpite) {
+                // Clonar template
+                const template = document.querySelector('#template-card-jogo');
+                const card = document.importNode(template.content, true);
+                
+                // Preencher dados básicos
+                card.querySelector('.jogo-titulo').textContent = palpite.jogo;
+                card.querySelector('.jogo-competicao').textContent = palpite.competicao;
+                card.querySelector('.jogo-horario').textContent = palpite.horario;
+                
+                // Mercados principais (1x2, over/under, ambas marcam)
+                const mercadosPrincipais = card.querySelector('.mercados-principais');
+                const mercadosAdicionais = card.querySelector('.mercados-adicionais');
+                
+                // Definir quais mercados são principais
+                const mercadosPrincipaisNomes = ['1x2', 'over_under', 'ambas_marcam'];
+                
+                // Adicionar mercados
+                for (const [mercado, dados] of Object.entries(palpite.mercados)) {
+                    // Determinar se é mercado principal ou adicional
+                    const isPrincipal = mercadosPrincipaisNomes.includes(mercado);
+                    const container = isPrincipal ? mercadosPrincipais : mercadosAdicionais;
+                    
+                    // Tratar resultado exato separadamente
+                    if (mercado === 'resultado_exato') {
+                        const resultadoExatoContainer = card.querySelector('.resultado-exato-container');
+                        const resultadoExatoItems = card.querySelector('.resultado-exato-items');
+                        
+                        // Mostrar container
+                        resultadoExatoContainer.classList.remove('d-none');
+                        
+                        // Adicionar itens
+                        dados.forEach(function(item) {
+                            const templateResultado = document.querySelector('#template-resultado-exato');
+                            const itemResultado = document.importNode(templateResultado.content, true);
+                            
+                            itemResultado.querySelector('.resultado-placar').textContent = item.palpite;
+                            itemResultado.querySelector('.resultado-probabilidade').textContent = item.confianca;
+                            
+                            // Calcular largura da barra de progresso
+                            const confianca = parseFloat(item.confianca.replace('%', ''));
+                            itemResultado.querySelector('.progress-bar').style.width = confianca + '%';
+                            
+                            resultadoExatoItems.appendChild(itemResultado);
+                        });
+                        
+                        continue;
+                    }
+                    
+                    // Tratar gols por equipe separadamente
+                    if (mercado === 'gols_por_equipe') {
+                        if (dados.casa) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>Gols Casa</td>
+                                <td>${dados.casa.palpite}</td>
+                                <td>${dados.casa.confianca}</td>
+                            `;
+                            container.appendChild(row);
+                        }
+                        
+                        if (dados.fora) {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>Gols Fora</td>
+                                <td>${dados.fora.palpite}</td>
+                                <td>${dados.fora.confianca}</td>
+                            `;
+                            container.appendChild(row);
+                        }
+                        
+                        continue;
+                    }
+                    
+                    // Mercados normais
+                    const row = document.createElement('tr');
+                    
+                    // Formatar nome do mercado
+                    let nomeFormatado = mercado.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    
+                    row.innerHTML = `
+                        <td>${nomeFormatado}</td>
+                        <td>${dados.palpite}</td>
+                        <td>${dados.confianca}</td>
+                    `;
+                    
+                    container.appendChild(row);
+                }
+                
+                // Adicionar card ao container
+                $('#container-palpites').append(card);
+            });
+        }
+    });
+</script>
+{% endblock %}
