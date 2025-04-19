@@ -614,5 +614,3 @@ if __name__ == "__main__":
     
     # Executar coleta
     executar_coleta(diretorio_dados, data, dias_futuros)
-
-        print(f"Estatísticas carregadas para o jogo {id_jogo}")
