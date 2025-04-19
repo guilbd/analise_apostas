@@ -16,6 +16,11 @@ if os.path.exists(config_file):
         for key, value in config.items():
             application.config[key] = value
 
+# Configurações específicas para ambiente de hospedagem
+application.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'sistema-apostas-esportivas-production-key')
+application.config['DEBUG'] = False
+application.config['TESTING'] = False
+
 # Inicializar aplicação
 if __name__ == '__main__':
-    application.run()
+    application.run(host='0.0.0.0')
