@@ -4,6 +4,7 @@ Módulo para integração do otimizador de desempenho com a aplicação Flask
 Este módulo atualiza a aplicação principal para incluir otimizações de desempenho.
 """
 
+from debug_route import register_debug_routes
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 import os
@@ -49,6 +50,9 @@ app.config['SECRET_KEY'] = 'sistema-apostas-esportivas-key'
 app.config['JOGOS_FILE'] = 'jogos_disponiveis.json'
 app.config['RELATORIOS_DIR'] = 'relatorios'
 app.config['DATA_FOLDER'] = os.path.join(os.getcwd(), 'dados')
+
+# Adicionar rotas de debug (coloque isso antes de iniciar o servidor)
+register_debug_routes(app)
 
 # Configurações de otimização de desempenho
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 ano em segundos
