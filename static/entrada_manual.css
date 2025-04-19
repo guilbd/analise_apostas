@@ -1,0 +1,129 @@
+/* Estilos para a página de entrada manual */
+.card {
+    margin-bottom: 2rem;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+    font-weight: 500;
+    border-bottom: none;
+}
+
+.alert-info {
+    background-color: #e6f3ff;
+    border-color: #b8daff;
+    color: #004085;
+}
+
+textarea.form-control {
+    font-family: monospace;
+    font-size: 0.9rem;
+    resize: vertical;
+}
+
+.table-responsive {
+    margin-top: 1rem;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Estilos para os resultados processados */
+.resultado-processado {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    border-left: 4px solid #007bff;
+}
+
+.resultado-processado h5 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.resultado-processado pre {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #dee2e6;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Estilos para os cards de estatísticas */
+.stat-card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.3s;
+    margin-bottom: 1.5rem;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card .card-body {
+    padding: 1.25rem;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    text-transform: uppercase;
+}
+
+.stat-card.bg-primary {
+    background-color: #007bff !important;
+}
+
+.stat-card.bg-success {
+    background-color: #28a745 !important;
+}
+
+.stat-card.bg-warning {
+    background-color: #ffc107 !important;
+}
+
+.stat-card.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+.stat-card .text-white .stat-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .card-header h5 {
+        font-size: 1.1rem;
+    }
+    
+    .stat-card .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+}
