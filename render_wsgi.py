@@ -13,9 +13,8 @@ application.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'sistema-apostas
 application.config['DEBUG'] = False
 application.config['TESTING'] = False
 
-# Remover configuração de SERVER_NAME para permitir qualquer domínio
-if 'SERVER_NAME' in application.config:
-    del application.config['SERVER_NAME']
+# Configurar SERVER_NAME ou definir como None para aceitar qualquer domínio
+application.config['SERVER_NAME'] = os.environ.get('SERVER_NAME', None)
 
 # Inicializar aplicação
 if __name__ == '__main__':
