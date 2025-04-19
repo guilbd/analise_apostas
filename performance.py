@@ -3,7 +3,6 @@ Módulo para otimização de desempenho do sistema web
 --------------------------------------------------
 Este módulo contém funções para otimizar o carregamento e desempenho do site.
 """
-
 import os
 import gzip
 import shutil
@@ -43,11 +42,20 @@ class PerformanceOptimizer:
             # Verificar se a resposta deve ser comprimida
             if self._should_compress(response):
                 accept_encoding = request.headers.get('Accept-Encoding', '')
-                
                 if 'gzip' in accept_encoding:
-                    response.data = gzip.compress(response.data)
-                    response.headers['Content-Encoding'] = 'gzip'
-                    response.headers['Content-Length'] = len(response.data)
+                    # Verificar se a resposta já está em modo de passagem direta
+                    if hasattr(response, 'direct_passthrough') and response.direct_passthrough:
+                        # Não comprimir respostas em modo de passagem direta
+                        return response
+                    
+                    try:
+                        response.data = gzip.compress(response.data)
+                        response.headers['Content-Encoding'] = 'gzip'
+                        response.headers['Content-Length'] = len(response.data)
+                    except Exception as e:
+                        # Registrar erro e continuar sem compressão
+                        if self.app.logger:
+                            self.app.logger.error(f"Erro ao comprimir resposta: {str(e)}")
             
             return response
     
@@ -90,7 +98,13 @@ class PerformanceOptimizer:
         
         # Verificar se o tipo de conteúdo é compressível
         content_type = response.headers.get('Content-Type', '')
-        compressible_types = ['text/', 'application/json', 'application/javascript', 'application/xml', 'application/xhtml+xml']
+        compressible_types = [
+            'text/', 
+            'application/json', 
+            'application/javascript', 
+            'application/xml', 
+            'application/xhtml+xml'
+        ]
         
         for t in compressible_types:
             if t in content_type:
@@ -117,7 +131,6 @@ class PerformanceOptimizer:
     def _calculate_file_hash(self, filepath):
         """Calcular hash MD5 de um arquivo."""
         hash_md5 = hashlib.md5()
-        
         with open(filepath, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b''):
                 hash_md5.update(chunk)
@@ -160,10 +173,8 @@ class PerformanceOptimizer:
         """Minificar conteúdo HTML."""
         # Remover comentários
         html_content = re.sub(r'<!--(.*?)-->', '', html_content, flags=re.DOTALL)
-        
         # Remover espaços em branco entre tags
         html_content = re.sub(r'>\s+<', '><', html_content)
-        
         # Remover espaços em branco no início e fim de linhas
         html_content = re.sub(r'^\s+|\s+$', '', html_content, flags=re.MULTILINE)
         
@@ -173,13 +184,10 @@ class PerformanceOptimizer:
         """Minificar conteúdo CSS."""
         # Remover comentários
         css_content = re.sub(r'/\*.*?\*/', '', css_content, flags=re.DOTALL)
-        
         # Remover espaços em branco desnecessários
         css_content = re.sub(r'\s+', ' ', css_content)
-        
         # Remover espaços em branco antes e depois de caracteres especiais
         css_content = re.sub(r'\s*([\{\}\:\;\,])\s*', r'\1', css_content)
-        
         # Remover ponto e vírgula no final de blocos
         css_content = re.sub(r';}', '}', css_content)
         
@@ -188,16 +196,12 @@ class PerformanceOptimizer:
     def minify_js(self, js_content):
         """Minificar conteúdo JavaScript."""
         # Esta é uma versão simplificada. Para produção, use uma biblioteca como UglifyJS
-        
         # Remover comentários de linha única
         js_content = re.sub(r'//.*$', '', js_content, flags=re.MULTILINE)
-        
         # Remover comentários de múltiplas linhas
         js_content = re.sub(r'/\*.*?\*/', '', js_content, flags=re.DOTALL)
-        
         # Remover espaços em branco desnecessários
         js_content = re.sub(r'\s+', ' ', js_content)
-        
         # Remover espaços em branco antes e depois de caracteres especiais
         js_content = re.sub(r'\s*([\{\}\(\)\[\]\:\;\,\+\-\*\/\=])\s*', r'\1', js_content)
         
@@ -207,7 +211,6 @@ class PerformanceOptimizer:
         """Otimizar imagens para web."""
         # Esta função requer ferramentas externas como PIL ou bibliotecas de otimização de imagem
         # Implementação simplificada para demonstração
-        
         if image_dir is None:
             image_dir = os.path.join(self.app.root_path, self.static_folder, 'img')
         
@@ -223,7 +226,6 @@ class PerformanceOptimizer:
         """Gerar CSS crítico para carregamento inicial rápido."""
         # Esta função requer ferramentas externas como criticalcss
         # Implementação simplificada para demonstração
-        
         if output_file is None:
             output_file = os.path.join(self.app.root_path, self.static_folder, 'css', f'critical-{template_name}.css')
         
@@ -235,12 +237,11 @@ class PerformanceOptimizer:
         """Analisar o desempenho do site e gerar relatório."""
         # Esta função analisaria o desempenho do site e geraria um relatório
         # Implementação simplificada para demonstração
-        
         report = {
             'compressed_files': len(self.compressed_files),
             'cache_timeout': self.cache_timeout,
-            'static_folder': self.static_folder,
-            'timestamp': datetime.now().isoformat()
+            'static_folder': self.static_folder
         }
         
         return report
+
